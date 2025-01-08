@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Person } from '../types';
 import { Loader } from './Loader';
 import PersonLink from './PersonLink';
@@ -9,15 +8,9 @@ interface PeopleProps {
   loading: boolean;
 }
 
-const People: React.FC<PeopleProps> = ({ person, loading }) => {
+const PeopleTable: React.FC<PeopleProps> = ({ person, loading }) => {
   const { slug } = useParams<{ slug: string }>();
-  const [selectedPerson, setSelectedPerson] = useState(slug || '');
-
-  useEffect(() => {
-    if (slug) {
-      setSelectedPerson(slug);
-    }
-  }, [slug]);
+  const selectedPerson = slug || '';
 
   return (
     <div className="block">
@@ -55,7 +48,6 @@ const People: React.FC<PeopleProps> = ({ person, loading }) => {
                     <PersonLink
                       name={individual.name}
                       person={individual}
-                      setSelectedPerson={setSelectedPerson}
                     />
                   </td>
                   <td>{individual.sex}</td>
@@ -68,7 +60,6 @@ const People: React.FC<PeopleProps> = ({ person, loading }) => {
                         person={person.find(
                           p => p.name === individual.motherName,
                         )}
-                        setSelectedPerson={setSelectedPerson}
                       />
                     ) : (
                       '-'
@@ -81,7 +72,6 @@ const People: React.FC<PeopleProps> = ({ person, loading }) => {
                         person={person.find(
                           p => p.name === individual.fatherName,
                         )}
-                        setSelectedPerson={setSelectedPerson}
                       />
                     ) : (
                       '-'
@@ -99,4 +89,4 @@ const People: React.FC<PeopleProps> = ({ person, loading }) => {
   );
 };
 
-export default People;
+export default PeopleTable;

@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export interface Person {
@@ -13,18 +12,15 @@ export interface Person {
 const PersonLink: React.FC<{
   name: string;
   person?: Person;
-  setSelectedPerson: Dispatch<SetStateAction<string>>;
-}> = ({ name, person, setSelectedPerson }) => {
+}> = ({ name, person }) => {
   const navigate = useNavigate();
 
   if (!person) {
     return <span>{name}</span>;
   }
 
-
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
-    setSelectedPerson(name);
     navigate(
       `/people/${name.replaceAll(' ', '-').toLowerCase()}-${person.born}`,
     );
@@ -34,7 +30,7 @@ const PersonLink: React.FC<{
     <a
       href={`#/people/${name.replaceAll(' ', '-').toLowerCase()}-${person.born}`}
       className={person.sex === 'f' ? 'has-text-danger' : ''}
-      onClick={e => handleClick(e)}
+      onClick={handleClick}
     >
       {name}
     </a>
